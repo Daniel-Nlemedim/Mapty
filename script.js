@@ -10,6 +10,7 @@ const inputType = document.querySelector(".form__input--type");
 const inputCadence = document.querySelector(".form__input--cadence");
 const inputElevation = document.querySelector(".form__input--elevation");
 const inputDuration = document.querySelector(".form__input--duration");
+const inputSteps = document.querySelector(".form__input--steps");
 const formBtn = document.querySelector(".form__btn");
 
 class App {
@@ -62,6 +63,12 @@ class App {
   _toggleElevationField() {
     inputElevation.closest(".form__row").classList.toggle("form__row--hidden");
     inputCadence.closest(".form__row").classList.toggle("form__row--hidden");
+    inputSteps.closest(".form__row").classList.toggle("form__row--hidden");
+  }
+
+  _toggleWalkingField(){
+    inputElevation.closest('form__row').classList.toggle('form__row--elevation')
+    inputSteps.closest(".form__row").classList.toggle("form__row--hidden");
   }
 
   _newWorkout(e) {

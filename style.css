@@ -21,7 +21,7 @@ html {
 }
 
 body {
-  font-family: 'Manrope', sans-serif;
+  font-family: "Manrope", sans-serif;
   color: var(--color-light--2);
   font-weight: 400;
   line-height: 1.6;
@@ -194,10 +194,13 @@ a:visited {
   flex: 1;
   height: 100%;
   background-color: var(--color-light--1);
+  
+  /* adding dark mode to map layout */
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
 /* Popup width is defined in JS using options */
-.leaflet-popup .leaflet-popup-content-wrapper {
+.leaflet-popup .leaflet-popup-content-wrapper .leaflet-control-attribution {
   background-color: var(--color-dark--1);
   color: var(--color-light--2);
   border-radius: 5px;
