@@ -1,0 +1,15 @@
+{
+  "name": "mapty-project",
+  "version": "1.0.0",
+  "description": "mapping out geolocation while working out",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "Daniel-Nlemedim"
+  },
+  "author": "zubby",
+  "license": "ISC"
+}
