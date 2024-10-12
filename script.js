@@ -42,7 +42,7 @@ class App {
 
     const coords = [latitude, longitude]; //destructed array
 
-    //from the leaflet DOCs
+    //initializing the map from the leaflet DOCs
     this.#map = L.map("map").setView(coords, 13); //13 -> is used to set the zoom level
 
     L.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
@@ -51,7 +51,7 @@ class App {
     }).addTo(this.#map);
 
     //Handling clicks on map
-    this.#map.on("click", this._showForm.bind(this));
+    this.#map.on("click", this._showForm.bind(this));//show form on click on map 
   }
 
   _showForm(mapE) {
@@ -73,6 +73,7 @@ class App {
 
   _newWorkout(e) {
     e.preventDefault();
+    let radius = e.accuracy;
 
     //clear input field
     inputDistance.value =
