@@ -45,10 +45,11 @@ class App {
     //initializing the map from the leaflet DOCs
     this.#map = L.map("map").setView(coords, 13); //13 -> is used to set the zoom level
 
-    L.tileLayer("https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png", {
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.#map);
+
 
     //Handling clicks on map
     this.#map.on("click", this._showForm.bind(this));//show form on click on map 
