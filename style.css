@@ -221,3 +221,27 @@ a:visited {
 .cycling-popup .leaflet-popup-content-wrapper {
   border-left: 5px solid var(--color-brand--1);
 }
+
+/* mobile view */
+@media screen and (max-width: 768px){
+  body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: hidden;
+    flex-direction: column;
+  }
+  .sidebar{
+    flex: 1;
+    padding: 2rem 2rem 4rem 2rem;
+    height: 30vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+  }
+  
+  #map{
+    flex: 2;
+    height: 70vh;
+  }
+
+}
