@@ -24,6 +24,8 @@ class workout{
   }
 }
 class Running extends workout{
+  type = 'running'; //type of workout
+
   constructor(coords, distance, duration, cadence) {
     super( coords, distance,duration); //calling parent constructor
     this .cadence = cadence;
@@ -37,6 +39,8 @@ class Running extends workout{
   }
 
 class Cycling extends workout{
+  type = 'cycling'; //type of workout
+
   constructor(coords, distance, duration,elevationGain){
     super(coords,distance,duration)
     this.elevation = elevationGain; //in meters
@@ -154,21 +158,20 @@ class App {
     }
 
     this.#workouts.push(workout); //pushing the new workout object to the workouts array
-
-
+console.log(this.#workouts); //logging the workouts array
     //render workout on map as marker
 
     this.renderWorkoutMarker(workout); //rendering the workout marker on map
+
     //hide form + clear input fields
     inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = '';//clear the input fields
-    form.style.display = 'none'; //hide the input form
+    // form.style.display = 'none'; //hide the input form
 
 
   }
 
-  renderWorkoutMarker(){
-   //display marker
-    L.marker([lat, lng])
+  renderWorkoutMarker(workout){
+    L.marker(workout.coords)
     .addTo(this.#map)
     .bindPopup(
       L.popup({
@@ -176,10 +179,10 @@ class App {
       minWidth: 100,
       autoClose: false,
       closeOnClick: false,
-      className: `${type}-popup`,
+      className: `${workout.type}-popup`,
       })
     )
-    .setPopupContent(`workout.type`)
+    .setPopupContent(`${workout.type === 'running' ? '🏃‍♂️' : '🚴‍♀️'} ${workout.distance} km`)
     .openPopup();
   }
 }
