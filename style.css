@@ -223,12 +223,17 @@ a:visited {
 
 /* mobile view */
 @media screen and (max-width: 768px){
+  html{
+    font-size : 50.5%;
+  }
   body{
     margin: 0;
     padding: 0;
     width: 100%;
     overflow: hidden;
     flex-direction: column;
+    scroll-behavior: smooth;
+    background-color: var(  --color-dark--1)
   }
   .sidebar{
     flex: 0.8;
@@ -241,6 +246,10 @@ a:visited {
   #map{
     flex: 2;
     height: 70vh;
+  }
+  .leaflet-container{
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
   }
 
 }
