@@ -56,7 +56,7 @@ class Cycling extends workout {
 //creating a map using leafletjs
 
 //prettier-ignore
-const containerWorkout = document.querySelector(".workout");
+const containerWorkouts = document.querySelector(".workouts");
 const form = document.querySelector(".form");
 const inputDistance = document.querySelector(".form__input--distance");
 const inputType = document.querySelector(".form__input--type");
@@ -70,14 +70,16 @@ class App {
   #map;
   #mapEvent;
   #workouts = []; //array to store all workouts
+  #mapZoomLevel = 13; //zoom level of the map
 
   constructor() {
-    this._getPosition();
+    //getting user's current position and load map  
+    this._getPosition(); 
 
+    //attaching events handlers
     form.addEventListener("submit", this._newWorkout.bind(this));
-
-    //toggling two input field
-    inputType.addEventListener("change", this._toggleElevationField.bind(this));
+    inputType.addEventListener("change", this._toggleElevationField.bind(this)); //toggling two input fields
+     containerWorkouts.addEventListener("click", this._moveToPopup.bind(this));  //moving to the popup when clicked on the workout
   }
 
   _getPosition() {
@@ -98,7 +100,7 @@ class App {
     const coords = [latitude, longitude]; //destructed array
 
     //initializing the map from the leaflet DOCs
-    this.#map = L.map("map").setView(coords, 13); //13 -> is used to set the zoom level
+    this.#map = L.map("map").setView(coords, this.#mapZoomLevel); //13 -> is used to set the zoom level
 
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
@@ -117,8 +119,8 @@ class App {
 
 _hideForm(){
     inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = ""; //clear the input fields
-    form.style.display = 'none';
-    form.classList.add('hidden')
+    form.style.display = 'none'; //hide the form
+    form.classList.add('hidden'); //add hidden class
     setTimeout(()=> ( form.style.display = 'grid'), 1000); //hide the form after 1 second
 }
 
@@ -198,7 +200,7 @@ _hideForm(){
         })
       )
       .setPopupContent(
-        `${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"} ${workout.description} ${workout.distance} km`
+        `${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"} ${workout.description}`
       )
       .openPopup();
   }
@@ -256,6 +258,27 @@ _hideForm(){
     };
 
     form.insertAdjacentHTML("afterend", html); //inserting the html after the form
+  }
+
+  _moveToPopup(e){
+
+    const workoutEl = e.target.closest('.workout'); //closest method is used to get the closest parent element with the class workout
+
+    //if workout is not found then return
+    if(!workoutEl) return;
+
+    //getting the workout data from the workout array using the id
+    const workout = this.#workouts.find(
+      work => work.id === workoutEl.dataset.id
+    );
+
+    this.#map.setView(workout.coords, this.#mapZoomLevel, {
+      animate: true, //smooth animation
+      pan: {
+        duration: 1
+      }, //pan duration
+    }); //setting the view of the map to the workout coordinates 
+    workout.click()
   }
 
 }
