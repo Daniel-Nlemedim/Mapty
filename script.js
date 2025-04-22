@@ -76,6 +76,9 @@ class App {
     //getting user's current position and load map
     this._getPosition();
 
+    //getting the darkMode function
+    this._checkDarkMode()
+
     //get data from local storage
     this._getLocalStorage();
 
@@ -83,6 +86,18 @@ class App {
     form.addEventListener("submit", this._newWorkout.bind(this));
     inputType.addEventListener("change", this._toggleElevationField.bind(this)); //toggling two input fields
     containerWorkouts.addEventListener("click", this._moveToPopup.bind(this)); //moving to the popup when clicked on the workout
+  }
+
+  // activating darkMode once it is  7pm
+  _checkDarkMode(){
+    const hour = new Date().getHours();
+    const isDark = hour >= 19 ||hour < 6
+    
+    if (isDark){
+      document.body.classList.add('dark-mode');
+    }else{
+      document.body.classList.remove('dark-mode');
+    }
   }
 
   _getPosition() {
@@ -113,11 +128,11 @@ class App {
     //Handling clicks on map
     this.#map.on("click", this._showForm.bind(this)); //show form on click on map
 
-    this.#workouts.forEach(workout => {
+    this.#workouts.forEach((workout) => {
       this._renderWorkoutMarker(workout); //rendering the workout marker on map
     });
   }
-
+  
   _showForm(mapE) {
     this.#mapEvent = mapE;
     form.classList.remove("hidden"); //show input forms
@@ -289,30 +304,28 @@ class App {
         duration: 1,
       }, //pan duration
     }); //setting the view of the map to the workout coordinates
-
   }
 
   _setLocalStorage() {
     localStorage.setItem("workouts", JSON.stringify(this.#workouts)); //convert the object to string
   }
 
-  _getLocalStorage(){
-  const data = JSON.parse(localStorage.getItem('workouts')) //convert the string back to object
-  
-  if(!data) return;
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem("workouts")); //convert the string back to object
+
+    if (!data) return;
 
     this.#workouts = data; // restore all workout array
 
-    this.#workouts.forEach(workout => {
+    this.#workouts.forEach((workout) => {
       this._renderWorkout(workout);
-    }); 
+    });
   }
 
-  reset(){
-    localStorage.removeItem('workouts'); //remove the workouts from local storage
+  reset() {
+    localStorage.removeItem("workouts"); //remove the workouts from local storage
     location.reload(); //reload the page
   }
-
 }
 
 const app = new App();
