@@ -188,8 +188,42 @@ a:visited {
   color: var(--color-light--2);
 }
 
+/* dark mode  */
+.dark-mode {
+  background-color: #121212;
+  color: #f5f5f5;
+}
+
+.dark-mode .form__input{
+  background-color: #2b2b2b;
+  color: #f5f5f5;
+  border: 1px solid #555;
+}
+
+.dark-mode .form__input::placeholder{
+  color: #aaa;
+}
+
+.dark-mode .form,
+.dark-mode .workout,
+.dark-mode .leaflet-control-container {
+  background-color: #1e1e1e;
+}
+
+.dark-mode .workout__details span,
+.dark-mode input,
+.dark-mode select {
+  color: #f5f5f5;
+}
+
+.dark-mode .workout__title{
+  color: #f5f5f5;
+}
+
+
+
 /* MAP */
-#map {
+.dark-mode #map {
   flex: 1;
   height: 100%;
   background-color: var(--color-light--1);
