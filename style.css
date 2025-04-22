@@ -276,6 +276,9 @@ a:visited {
     overflow-y: scroll;
     overflow-x: hidden;
   }
+  .form__input{
+    font-size: auto;
+  }
   
   #map{
     flex: 2;
