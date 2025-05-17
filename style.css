@@ -223,12 +223,17 @@ a:visited {
 
 
 /* MAP */
-.dark-mode #map {
+ #map {
   flex: 1;
   height: 100%;
   background-color: var(--color-light--1);
   
-  /* adding dark mode to map layout */
+
+}
+.dark-mode #map {
+  background-color: var(--color-dark--1);
+  border-radius: 8px;
+    /* adding dark mode to map layout */
   filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
 }
 
