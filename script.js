@@ -77,7 +77,7 @@ class App {
     this._getPosition();
 
     //getting the darkMode function
-    this._checkDarkMode()
+    this._checkDarkMode();
 
     //get data from local storage
     this._getLocalStorage();
@@ -89,50 +89,78 @@ class App {
   }
 
   // activating darkMode once it is  7pm
-  _checkDarkMode(){
+  _checkDarkMode() {
     const hour = new Date().getHours();
-    const isDark = hour >= 19 ||hour < 6
-    
-    if (isDark){
-      document.body.classList.add('dark-mode');
-    }else{
-      document.body.classList.remove('dark-mode');
+    const isDark = hour >= 19 || hour < 6;
+
+    if (isDark) {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
     }
   }
+
+  //rendering error message
+  //using template literals to add html code
+  _renderError = function (msg) {
+    const html = `
+    <div class="error">
+      <div>
+        <svg>
+          <use href="img/icons.svg#icon-alert-triangle"></use>
+        </svg>
+      </div>
+      <p>${msg}</p>
+    </div>
+    `;
+    map.insertAdjacentHTML("beforeend", html);
+  };
 
   _getPosition() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         this._loadMap.bind(this),
-        function () {
-          alert(`Could not get your location`); //error
+        (err) => {
+          this._renderError(
+            `Could not get your location!. Please allow location access!` //error message if user denies location access
+          );
         }
       );
+    } else {
+      this._renderError(`Geolocation is not supported by your browser!`); //error message if geolocation is not supported
     }
   }
 
   _loadMap(position) {
-    const { latitude } = position.coords; //success
-    const { longitude } = position.coords;
+    try {
+      const { latitude } = position.coords; //success
+      const { longitude } = position.coords;
 
-    const coords = [latitude, longitude]; //destructed array
+      const coords = [latitude, longitude]; //destructed array
 
-    //initializing the map from the leaflet DOCs
-    this.#map = L.map("map").setView(coords, this.#mapZoomLevel); //13 -> is used to set the zoom level
+      //initializing the map from the leaflet DOCs
+      this.#map = L.map("map").setView(coords, this.#mapZoomLevel); //13 -> is used to set the zoom level
 
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution:
-        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-    }).addTo(this.#map);
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+      }).addTo(this.#map);
 
-    //Handling clicks on map
-    this.#map.on("click", this._showForm.bind(this)); //show form on click on map
+      if (!this.#map) {
+        throw new Error(`map could not be loaded`);
+      }
 
-    this.#workouts.forEach((workout) => {
-      this._renderWorkoutMarker(workout); //rendering the workout marker on map
-    });
+      //Handling clicks on map
+      this.#map.on("click", this._showForm.bind(this)); //show form on click on map
+
+      this.#workouts.forEach((workout) => {
+        this._renderWorkoutMarker(workout); //rendering the workout marker on map
+      });
+    } catch (err) {
+      this._renderError(`Map could not be loaded! Please try again later!`); //error message if map is not loaded
+    }
   }
-  
+
   _showForm(mapE) {
     this.#mapEvent = mapE;
     form.classList.remove("hidden"); //show input forms
