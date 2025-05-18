@@ -220,7 +220,14 @@ a:visited {
   color: #f5f5f5;
 }
 
-
+.error{
+color:var(--color-light--1);
+font-size: 20px;
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+}
 
 /* MAP */
  #map {
@@ -290,5 +297,17 @@ a:visited {
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
   }
+
+  .error{
+  padding: 25px;
+  margin: 0 auto;
+  color:var(--color-light--1);
+  font-size: 20px;
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
 
 }
