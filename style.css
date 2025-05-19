@@ -290,7 +290,7 @@ transform: translate(-50%, -50%);
   }
   
   #map{
-    flex: 3;
+    flex: 2.8;
     height: 70vh;
   }
   .leaflet-container{
@@ -301,11 +301,11 @@ transform: translate(-50%, -50%);
   .error{
   padding: 25px;
   margin: 0 auto;
-  color:var(--color-light--1);
+  color:var(--color-light--2);
   font-size: 20px;
   position: absolute;
-  top: 10%;
-  left: 50%;
+  top: 30%;
+  /* left: 50%; */
   transform: translate(-50%, -50%);
   text-align: center;
 }
