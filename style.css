@@ -290,7 +290,7 @@ transform: translate(-50%, -50%);
   }
   
   #map{
-    flex: 2.1;
+    flex: 2;
     height: 70vh;
   }
   .leaflet-container{
