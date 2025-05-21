@@ -19,13 +19,24 @@
     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
   <script defer src="script.js"></script>
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
 
   <title>Mapty || Map your workouts</title>
 </head>
 
 <body>
   <div class="sidebar">
-    <img src="logo.png" alt="Logo" class="logo" />
+    <div class="logo-container">
+      <lord-icon class="logo"
+          src="https://cdn.lordicon.com/dhmavvpz.json"
+          trigger="loop"
+          delay="1500"
+          state="loop-roll"
+          colors="primary:#0a5c49,secondary:#109121"
+          style="width:120px;height:120px">
+      </lord-icon>
+      <span class="logo-text">Mapty</span>
+    </div>
 
     <ul class="workouts">
       <form class="form hidden">

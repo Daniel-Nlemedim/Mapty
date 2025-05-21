@@ -49,11 +49,26 @@ a:visited {
   flex-direction: column;
 }
 
-.logo {
+.logo-container {
+  display: flex;
+  justify-content: center;
+  /* gap: 1rem; */
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.logo-text{
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--color-light--1);
+  letter-spacing: 2px;
+}
+
+/* .logo {
   height: 5.2rem;
   align-self: center;
   margin-bottom: 4rem;
-}
+} */
 
 .workouts {
   list-style: none;
@@ -308,6 +323,21 @@ transform: translate(-50%, -50%);
   /* left: 50%; */
   transform: translate(-50%, -50%);
   text-align: center;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.logo-text{
+  font-size: 4rem;
+  font-weight: 800;
+  color: var(--color-light--1);
+  letter-spacing: 2px;
 }
 
 }
