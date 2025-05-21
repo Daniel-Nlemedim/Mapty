@@ -1,1 +1,1 @@
-# Mapty
+# Map your workout
