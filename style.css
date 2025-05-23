@@ -248,6 +248,22 @@ left: 50%;
 transform: translate(-50%, -50%);
 }
 
+.weather-info {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5em;
+}
+.weather-icon {
+  width: 1.5em;
+  height: 1.5em;
+  vertical-align: middle;
+}
+.weather-desc {
+  font-size: 1em;
+  margin-left: 0.3em;
+  color: var(--color-light--1);
+}
+
 /* MAP */
  #map {
   flex: 1;

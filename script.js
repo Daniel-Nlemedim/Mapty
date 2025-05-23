@@ -88,6 +88,29 @@ class App {
     containerWorkouts.addEventListener("click", this._moveToPopup.bind(this)); //moving to the popup when clicked on the workout
   }
 
+  async _getWeather(lat, lng) {
+    const apiKey = "700c116fb84bb53fdeec9c74479db76f";
+    const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${apiKey}&units=metric`;
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Weather data not found!`); //if response is not ok then throw error
+      if (res.status === 404) {
+        this._renderError(`Weather data not found!`);
+        return null;
+      } //if status is 404 then render error
+
+      const data = await res.json(); //parsing the data
+      return {
+        temp: Math.round(data.main.temp),
+        icon: data.weather[0].icon,
+        description: data.weather[0].description,
+      }; //returning the weather data
+    } catch (err) {
+      // this._renderError(`Weather data not found!`);
+      return null;
+    }
+  }
+
   // activating darkMode once it is  7pm
   _checkDarkMode() {
     const hour = new Date().getHours();
@@ -183,7 +206,7 @@ class App {
     inputCadence.closest(".form__row").classList.toggle("form__row--hidden");
   }
 
-  _newWorkout(e) {
+  async _newWorkout(e) {
     e.preventDefault();
 
     const type = inputType.value; //running or cycling
@@ -210,6 +233,10 @@ class App {
       }
       //creating a new running object
       workout = new Running([lat, lng], distance, duration, cadence);
+
+      //fetch and store weather data
+      workout.weather = await this._getWeather(lat, lng);
+
       this.#workouts.push(workout); //pushing the new workout object to the workouts array
     }
 
@@ -226,6 +253,13 @@ class App {
       }
 
       workout = new Cycling([lat, lng], distance, duration, elevation); //creating a new cycling object
+
+      //fetch and store weather data
+      workout.weather = await this._getWeather(lat, lng); //fetching the weather data
+      if (!workout.weather) {
+        return alert("Weather data not found!");
+      }
+
       this.#workouts.push(workout); //pushing the new workout object to the workouts array
     }
 
@@ -261,10 +295,22 @@ class App {
   }
 
   _renderWorkout(workout) {
+    const weather = workout.weather; //getting the weather data from the workout object
+
+    const weatherInfo = weather
+      ? `<span class="weather-info">
+         <img src="https://openweathermap.org/img/wn/${weather.icon}.png" 
+              title="${weather.description}" 
+              class="weather-icon" 
+              style="vertical-align:middle;width:1.5em;height:1.5em;margin-left:0.5em;" />
+         <span class="weather-desc" style="font-size:1em;margin-left:0.3em;">${weather.temp}°C, ${weather.description}</span>
+       </span>`
+      : ""; //if weather data is not available then return empty string
+
     //using template literals to add html code
     let html = ` 
     <li class="workout workout--${workout.type}" data-id="${workout.id}">
-          <h2 class="workout__title">${workout.description}</h2>
+          <h2 class="workout__title">${workout.description} ${weatherInfo}</h2>
           <div class="workout__details">
             <span class="workout__icon">
               ${workout.type === "running" ? "🏃‍♂️" : "🚴‍♀️"}
@@ -292,7 +338,6 @@ class App {
                <span class="workout__value">${workout.cadence}</span>
                <span class="workout__unit">spm</span>
              </div>
-           </li>
             `;
     }
 
@@ -308,11 +353,13 @@ class App {
                <span class="workout__value">${workout.elevation}</span>
                <span class="workout__unit">m</span>
              </div>
-           </li>
             `;
     }
 
-    form.insertAdjacentHTML("afterend", html); //inserting the html after the form
+    html += `</li>`; //closing the workout list
+
+    //inserting the html at the beginning of the workouts list
+    document.querySelector(".workouts").insertAdjacentHTML("beforeend", html); //inserting the html at the beginning of the workouts list
   }
 
   _moveToPopup(e) {
