@@ -85,7 +85,27 @@ class App {
     //attaching events handlers
     form.addEventListener("submit", this._newWorkout.bind(this));
     inputType.addEventListener("change", this._toggleElevationField.bind(this)); //toggling two input fields
+    
     containerWorkouts.addEventListener("click", this._moveToPopup.bind(this)); //moving to the popup when clicked on the workout
+
+    containerWorkouts.addEventListener("click", this._deleteWorkout.bind(this)); //deleting the workout when clicked on the delete button
+  }
+
+  _deleteWorkout(e) {
+    const btn = e.target.closest(".workout__delete");
+    if (!btn) return;
+
+    const workoutEl = btn.closest(".workout");
+    const workoutId = workoutEl.dataset.id;
+
+    // Remove workout from data array
+  app.#workouts = app.#workouts.filter(w => w.id !== workoutId);
+
+  // Update localStorage
+  localStorage.setItem('workouts', JSON.stringify(app.#workouts));
+
+  // Remove from DOM
+  workoutEl.remove();
   }
 
   async _getWeather(lat, lng) {
@@ -304,7 +324,8 @@ class App {
               class="weather-icon" 
               style="vertical-align:middle;width:1.5em;height:1.5em;margin-left:0.5em;" />
          <span class="weather-desc" style="font-size:1em;margin-left:0.3em;">${weather.temp}°C, ${weather.description}</span>
-       </span>`
+       </span>
+      <button class="workout__delete">&times;</button>`
       : ""; //if weather data is not available then return empty string
 
     //using template literals to add html code
@@ -359,7 +380,7 @@ class App {
     html += `</li>`; //closing the workout list
 
     //inserting the html at the beginning of the workouts list
-    document.querySelector(".workouts").insertAdjacentHTML("beforeend", html); //inserting the html at the beginning of the workouts list
+    form.insertAdjacentHTML("afterend", html); //inserting the html at the beginning of the workouts list
   }
 
   _moveToPopup(e) {

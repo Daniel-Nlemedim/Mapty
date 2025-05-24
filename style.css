@@ -264,6 +264,34 @@ transform: translate(-50%, -50%);
   color: var(--color-light--1);
 }
 
+.workout {
+  position: relative;
+  padding-right: 2rem; /* give room for the button */
+}
+
+.workout__delete {
+  padding: 1.5rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: transparent;
+  border: none;
+  font-weight: bold;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.workout--running .workout__delete {
+  color: var(--color-brand--2);
+}
+.workout--cycling .workout__delete {
+  color: var(--color-brand--1);
+}
+.workout__delete:hover {
+  color: var(--color-light--1);
+  opacity: 0.7;
+}
+
+
 /* MAP */
  #map {
   flex: 1;
