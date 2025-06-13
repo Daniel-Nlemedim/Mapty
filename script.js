@@ -65,6 +65,7 @@ const inputElevation = document.querySelector(".form__input--elevation");
 const inputDuration = document.querySelector(".form__input--duration");
 const inputSteps = document.querySelector(".form__input--steps");
 const formBtn = document.querySelector(".form__btn");
+const copyRight = document.querySelector(".copyright");
 
 class App {
   #map;
@@ -81,6 +82,9 @@ class App {
 
     //get data from local storage
     this._getLocalStorage();
+
+    //calculating the current year
+    this._calcYear();
 
     //attaching events handlers
     form.addEventListener("submit", this._newWorkout.bind(this));
@@ -404,6 +408,12 @@ class App {
       }, //pan duration
     }); //setting the view of the map to the workout coordinates
   }
+
+  //calculating the current year and setting it to the copyright text
+_calcYear(){
+  const currentYear = new Date().getFullYear();
+  copyRight.textContent = `© ${currentYear} - All rights reserved.`;
+}
 
   _setLocalStorage() {
     localStorage.setItem("workouts", JSON.stringify(this.#workouts)); //convert the object to string
