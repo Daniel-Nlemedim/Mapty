@@ -134,9 +134,8 @@ a:visited {
 .form {
   background-color: var(--color-dark--2);
   border-radius: 5px;
-  padding: 1.5rem 2.75rem;
+  padding: 1rem 2.75rem;
   margin-bottom: 1.75rem;
-
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.5rem 2.5rem;
@@ -186,7 +185,17 @@ a:visited {
 }
 
 .form__btn {
-  display: none;
+  display: block;
+  border-radius: 20px;
+  font-size: 1.5rem;
+  width: 30%;
+  border: none;
+  margin: 0 auto;
+  grid-column: 1 / -1;
+  justify-content: center;
+  background-color: var(--color-light--1);
+  font-weight: 600;
+  color:#fff;
 }
 
 .copyright {

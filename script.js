@@ -85,10 +85,13 @@ class App {
     //attaching events handlers
     form.addEventListener("submit", this._newWorkout.bind(this));
     inputType.addEventListener("change", this._toggleElevationField.bind(this)); //toggling two input fields
-    
+
     containerWorkouts.addEventListener("click", this._moveToPopup.bind(this)); //moving to the popup when clicked on the workout
 
     containerWorkouts.addEventListener("click", this._deleteWorkout.bind(this)); //deleting the workout when clicked on the delete button
+    formBtn.addEventListener("click", (e) => {
+      this._renderError.bind(this);
+    });
   }
 
   _deleteWorkout(e) {
@@ -99,13 +102,13 @@ class App {
     const workoutId = workoutEl.dataset.id;
 
     // Remove workout from data array
-  app.#workouts = app.#workouts.filter(w => w.id !== workoutId);
+    app.#workouts = app.#workouts.filter((w) => w.id !== workoutId);
 
-  // Update localStorage
-  localStorage.setItem('workouts', JSON.stringify(app.#workouts));
+    // Update localStorage
+    localStorage.setItem("workouts", JSON.stringify(app.#workouts));
 
-  // Remove from DOM
-  workoutEl.remove();
+    // Remove from DOM
+    workoutEl.remove();
   }
 
   async _getWeather(lat, lng) {
